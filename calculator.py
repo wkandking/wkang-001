@@ -35,7 +35,7 @@ class Config(object):
             for data in reader:
                 data=data[0].strip()
                 name,num1=data.split('=')
-                config[name]=num1
+                config[name.strip()]=num1.strip()
         return config
 
 
