@@ -31,8 +31,9 @@ class Config(object):
     def _read_config(self,filename):
         config={}
         with open(filename) as file:
-            for data in file:
-                data=data.strip()
+            reader=csv.reader(file)
+            for data in reader:
+                data=data[0].strip()
                 name,num1=data.split('=')
                 config[name]=num1
         return config
@@ -45,10 +46,10 @@ class UserData(object):
         self.res=self.calculate(config)
     def _read_user_data(self,filename):
         userdata={}
-        with open(filename) as file:        
-            for data in file:
-                name2,num2=data.split(',')
-                userdata[name2]=num2.strip()
+        with open(filename) as file:
+            f_csv=csv.reader(file)        
+            for data in f_csv:
+                userdata[data[0]]=data[1].strip()
         return userdata
     def count_res(self,num1):
         if num1 <= 3500:
