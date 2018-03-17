@@ -45,11 +45,12 @@ class UserData(object):
         self.userdata=self._read_user_data(filename)
         self.res=self.calculate(config)
     def _read_user_data(self,filename):
-        userdata={}
+        userdata=[]
         with open(filename) as file:
             f_csv=csv.reader(file)        
             for data in f_csv:
-                userdata[data[0]]=data[1].strip()
+                userdata.append(data)
+        print(userdata)
         return userdata
     def count_res(self,num1):
         if num1 <= 3500:
@@ -74,7 +75,8 @@ class UserData(object):
         lv=float(config['YangLao'])+float(config['YiLiao'])+float(config['ShiYe'])+float(config['GongShang'])+float(config['ShengYu'])+float(config['GongJiJin'])
         JiShuL=float(config['JiShuL'])
         JiShuH=float(config['JiShuH'])
-        for name,fee1 in self.userdata.items():
+        for data in self.userdata:
+            name,fee1=data[0],data[1]
             fee=float(fee1)
             if fee<=JiShuL:
                 fee=JiShuL
@@ -85,6 +87,7 @@ class UserData(object):
             num3=self.count_res(float(fee1)-fee*lv)
             data=[name,fee1,format(fee*lv,'.2f'),format(num3,'.2f'),format(float(fee1)-fee*lv-num3,'.2f')]
             res.append(data)
+        print(res)
         return res
     def export(self,filename1):
         res=self.res
