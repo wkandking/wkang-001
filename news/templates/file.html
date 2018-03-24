@@ -1,3 +1,11 @@
-{%   for key,value in file_data.items()  %}
-  <p>  key:{{key}}value:{{value}}   </p>
-  {%     endfor%}
+{%   if file_id=='1'   %}
+<p>  title:{{content.title1}}       </p>
+<p>   created_time: {{   content.created_time1}}          </p>
+<p>    category_id:{{ content.category_id1}}</p>
+<p>    content:{{content. content1}}  </p>
+{%    elif file_id=='2'                 %}
+<p>  title:{{content.title2}}       </p>
+<p>   created_time: {{   content.created_time2}}          </p>
+<p>    category_id:{{ content.category_id2}}</p>
+<p>    content:{{content. content2}}  </p>
+{%    endif     %}

@@ -1,9 +1,2 @@
-<h1>filename_json:</h1>
-{%  for filename in filename_json    %}
-  <p>   {{filename}}  </p>
- {%    endfor   %}
- <hr>
- <h1>title_list:</h1>
-{%  for title in title_list    %}
-  <p>   {{ title }}  </p>
- {%    endfor   %}
+<a href={{  url_for('file',file_id=titles[0].id)  }}>{{title.title1}}</a>
+<a href={{  url_for('file',file_id=titles[1].id)  }}>{{title.title2}}</a>
