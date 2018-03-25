@@ -1,12 +1,14 @@
 from flask import Flask,render_template,abort
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from pymongo import MongoClient
 
 app=Flask(__name__)
 app.config['TEMPLATES_AUTO_RELODA']=True
 app.config['SQLALCHEMY_DATABASE_URI']='mysql://root@localhost/shiyanlou'
 db=SQLAlchemy(app)
-
+client=MongoClient('127.0.0.1',27017)
+db_mongo=client.shiyanlou
 
 class File(db.Model):
 	id=db.Column(db.Integer,primary_key=True)
@@ -22,6 +24,19 @@ class File(db.Model):
 		self.content=content
 	def __repr__(self):
 		return '<File %s>'%self.title
+	def add_tag(self,tag_name):
+		if tag_name not in  db_mongo.tag.find_one({'file_id':self.id})['tag_name']:
+			file_tag={'file_id':self.id,'tag_name':tag_name}
+			db_mongo.tag.insert_one(file_tag)
+	def remove_tag(self,tag_name):
+		db_mongo.tag.delect_one({'tag_name':tag_name})
+	@property 
+	def tags(self):
+		tags=[]
+		tags_file=db_mongo.tag.find({'file_id':self.id})
+		for tag in tags_file:
+			tags.append(tag['tag_name'])
+		return tags
 
 class Category(db.Model):
 	id=db.Column(db.Integer,primary_key=True)
@@ -32,6 +47,7 @@ class Category(db.Model):
 		return '<Category %s>'%self.name
 
 titles=File.query.all()
+print(titles)
 category1=titles[0]
 category2=titles[1]
 
@@ -41,14 +57,7 @@ def not_found(error):
 
 @app.route('/')
 def index():
-	title={
-	'title1':category1.title,
-	'title2':category2.title
-	}
-	return render_template('index.html',title=title,titles=titles)
-
-
-
+	return render_template('index.html',titles=titles)
 
 @app.route('/files/<file_id>')
 def file(file_id):

@@ -1,2 +1,5 @@
-<a href={{  url_for('file',file_id=titles[0].id)  }}>{{title.title1}}</a>
-<a href={{  url_for('file',file_id=titles[1].id)  }}>{{title.title2}}</a>
+
+{%  for new in titles   %}
+<a href="{{  url_for('file',file_id=new.id)  }}">{{  new.title    }}</a>
+<p> {{new.tags}}<p>
+{%   endfor  %}
