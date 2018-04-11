@@ -10,11 +10,12 @@ from sqlalchemy.orm import sessionmaker
 from wkang.models import Course,engine
 class WkangPipeline(object):
     def process_item(self, item, spider):
+
         self.session.add(Course(**item))
         return item
-    def __init__(self):
+    def open_spider(self,spider):
         Session=sessionmaker(bind=engine)
-        self.session=Session
+        self.session=Session()
     def close_spider(self,spider):
         self.session.commit()
         self.session.close()

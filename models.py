@@ -23,5 +23,8 @@ class Course(Base):
     id=Column(Integer,primary_key=True)
     name=Column(String(64),index=True)
     update_time=Column(String(64))
+    commits=Column(Integer)
+    branches=Column(Integer)
+    releases=Column(Integer)
 if __name__=='__main__':
     Base.metadata.create_all()
