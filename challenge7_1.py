@@ -49,6 +49,6 @@ def co2():
     DataFrame=pd.DataFrame(results,index=['High income: OECD','High income: nonOECD','Low income','Lower middle income','Upper middle income'],
                         columns=['Income group','Sum emissions','Highest emission country','Highest emissions','Lowest emission country','Lowest emissions'] )
     DataFrame=DataFrame.set_index('Income group')
-    return results
+    return DataFrame
 if __name__=='__main__':
     co2()
