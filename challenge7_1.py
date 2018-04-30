@@ -34,7 +34,7 @@ def co2():
     df_climate_Country=pd.read_excel("D:/ClimateChange.xlsx",sheetname='Country')
     df=pd.merge(df_climate_Data,df_climate_Country)
     df1=df[df['Series code']=='EN.ATM.CO2E.KT']
-    df1=df1.set_index('Country code')
+    df1=df1.set_index('Country name')
     df2=df1[df1['Income group']=='High income: nonOECD']
     df3=df1[df1['Income group']=='High income: OECD']
     df4 = df1[df1['Income group'] == 'Low income']
@@ -51,4 +51,4 @@ def co2():
     DataFrame=DataFrame.set_index('Income group')
     return DataFrame
 if __name__=='__main__':
-    co2()
+    print(co2())
